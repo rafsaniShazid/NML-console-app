@@ -10,7 +10,7 @@ Only Coeffients:<br>
 2 3 20 4 5 <br>
 1 1 2 10 3 <br>
 4 1 1 2 15 <br>
-
+constanst:<br>
 27 34 52 21 30
 
 input for non linear equation:
