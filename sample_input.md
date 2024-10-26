@@ -15,13 +15,13 @@ Only Coeffients:<br>
 
 input for non linear equation:
 (bisection)
-2 -3 7 -5 4 -6
+2 -3 7 -5 4 -6<br>
 
 interval: 1 2
 
 False position:
 
-2 -5 3 -8 0 7
+2 -5 3 -8 0 7<br>
 interval: 1 3
 
 runge_kutta:
