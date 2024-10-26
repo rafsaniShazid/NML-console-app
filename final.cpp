@@ -538,8 +538,152 @@ void runge_kutta() {
     cout << "The value of y at x=" << x << " is: " << y << endl;
 }
 
+void newton_raphson() {
+    int deg;
+    cout << "Enter the degree of the polynomial: ";
+    cin >> deg;
 
-int main(){
+    vector<double> coeff(deg + 1);
+    cout << "Enter the coefficients (from highest to lowest degree): ";
+    for (int i = 0; i <= deg; i++) {
+        cin >> coeff[i];
+    }
+
+    vector<double> deriv(deg);
+    for (int i = 0; i < deg; i++) {
+        deriv[i] = coeff[i] * (deg - i);
+    }
+
+    double x0;
+    cout << "Enter the initial guess x0: ";
+    cin >> x0;
+
+    int n;
+    cout << "Enter the number of iterations: ";
+    cin >> n;
+
+    double x1;
+
+    for (int i = 0; i < n; i++) {
+        double f_x = 0;
+        double df_x = 0;
+
+        for (int j = 0; j < coeff.size(); j++) {
+            f_x += coeff[j] * pow(x0, coeff.size() - j - 1);
+        }
+
+        for (int j = 0; j < deriv.size(); j++) {
+            df_x += deriv[j] * pow(x0, deriv.size() - j - 1);
+        }
+
+        if (fabs(df_x) < 1e-10) {
+            cout << "Derivative is too close to zero; Newton-Raphson method fails." << endl;
+            return;
+        }
+
+        x1 = x0 - f_x / df_x;
+
+        if (fabs(x1 - x0) < 1e-10) {
+            cout << "Root found at: " << x1 << endl;
+            return;
+        }
+
+        x0 = x1;
+    }
+
+    cout << "Root found at: " << x1 << endl;
+}
+
+double secant_method() {
+    int deg;
+    cout << "Enter the degree of the polynomial: ";
+    cin >> deg;
+
+    vector<double> coeff(deg + 1);
+    cout << "Enter the coefficients (from highest to lowest degree): ";
+    for (int i = 0; i <= deg; i++) {
+        cin >> coeff[i];
+    }
+
+    double x0, x1;
+    cout << "Enter the initial guesses x0 and x1: ";
+    cin >> x0 >> x1;
+
+    int n;
+    cout << "Enter the number of iterations: ";
+    cin >> n;
+
+    double xi = x1;
+
+    for (int i = 1; i <= n; i++) {
+        double fx0 = 0, fx1 = 0;
+        for (int j = 0; j < coeff.size(); j++) {
+            fx0 += coeff[j] * pow(x0, coeff.size() - j - 1);
+            fx1 += coeff[j] * pow(x1, coeff.size() - j - 1);
+        }
+
+        if (fx1 == fx0) {
+            cout << "Division by zero error in Secant method." << endl;
+            return -1;
+        }
+
+        xi = x1 - fx1 * (x1 - x0) / (fx1 - fx0);
+        x0 = x1;
+        x1 = xi;
+    }
+
+    cout << "Root found at: " << xi << " after " << n << " iterations." << endl;
+    return xi;
+}
+
+int main()
+{
+ int choice;
+  do {
+        // Using color codes for the text
+        cout << "\033[1;34m\n\nSolution of Linear Equation \n\n\033[0m";
+        cout << "\033[1;95mInput 1\033[0m\033[1;32m to solve with Jacobi Method\n\033[0m";
+        cout << "\033[1;95mInput 2\033[0m\033[1;32m to solve with Gauss-Seidel Method\n\033[0m";
+        cout << "\033[1;95mInput 3\033[0m\033[1;32m to solve with Gauss Elimination Method\n\033[0m";
+        cout << "\033[1;95mInput 4\033[0m\033[1;32m to solve with Gauss-Jordan Elimination Method\n\033[0m";
+        cout << "\033[1;95mInput 5\033[0m\033[1;32m to solve LU factorization Method\n\033[0m";
+        
+        cout << "\033[1;34m\n\nSolution of Non-Linear equation\n\n\033[0m";
+        cout << "\033[1;95mInput 6\033[0m\033[1;32m to solve with Bi-section Method\n\033[0m";
+        cout << "\033[1;95mInput 7\033[0m\033[1;32m to solve with False position Method\n\033[0m";
+        cout << "\033[1;95mInput 8\033[0m\033[1;32m to solve with Secant Method\n\033[0m";
+        cout << "\033[1;95mInput 9\033[0m\033[1;32m to solve with Newton-Raphson Method\n\033[0m";
+        
+        cout << "\033[1;34m\n\nSolution of Differential equation\n\n\033[0m";
+        cout << "\033[1;95mInput 10\033[0m\033[1;32m to solve with Runge-Kutta Method\n\033[0m";
+        cout << "\033[1;95mInput 11\033[0m\033[1;32m to inverted matrix\n\033[0m";
+        
+        cout << "\033[1;95mInput 0\033[0m\033[1;31m to exit\n\n\033[0m";
+        cout << "\033[1;33mEnter your choice: \033[0m";
+        cin >> choice;
+        
+        // Reset color before switch-case block
+        cout << "\033[0m";
+
+        switch (choice) {
+            case 0: 
+                cout << "\033[1;32mExited successfully\n\033[0m"; 
+                break;
+            case 1: Jacobi_iteration(); break;
+            case 2: gauss_siedel(); break;
+            case 3: gauss_elimination(); break;
+            case 4: gauss_jordan_elimination(); break;
+            case 5: LU_factorization(); break;
+            case 6: bisectionMethod(); break;
+            case 7: falsePositionMethod(); break;
+            case 8: secant_method(); break;
+            case 9: newton_raphson(); break;
+            case 10: runge_kutta(); break;
+            case 11: invertMatrix(); break;
+            default: 
+                cout << "\033[1;31mInvalid input\n\033[0m";
+        }
+    } while (choice);
     
     return 0;
 }
