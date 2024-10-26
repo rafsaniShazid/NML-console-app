@@ -3,7 +3,7 @@ sample input for gauss seidel:<br>
 3 15 2 1 1 34<br>
 2 3 20 4 5 52<br>
 1 1 2 10 3 21<br>
-4 1 1 2 15 30<br>
+4 1 1 2 15 30<br><br>
 Only Coeffients:<br>
 10 2 1 3 4 <br>
 3 15 2 1 1 <br>
