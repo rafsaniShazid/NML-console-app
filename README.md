@@ -244,4 +244,4 @@ This project is open-source and free to use.
 Contributions are welcome! Please feel free to submit a pull request or report any issues.
 
 ## Contact
-For any questions or feedback, please contact the repository maintainer.
+For any questions or feedback, please feel free to contact with rafsaniShazid(github username).
