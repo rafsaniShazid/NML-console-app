@@ -4,7 +4,7 @@
 
 using namespace std;
 
-double function(vector<double> &coeff, double x)
+double function(const vector<double> &coeff, double x)
 {
     double result = 0;
     for (int i = 0; i < coeff.size(); i++)
@@ -28,10 +28,9 @@ double newtonRaphsonMethod()
     }
 
     vector<double> deriv(deg);
-    cout << "Enter the coefficients of the derivative (from highest to lowest degree): ";
     for (int i = 0; i < deg; i++)
     {
-        cin >> deriv[i];
+        deriv[i] = coeff[i] * (deg - i);
     }
 
     double x0;
@@ -44,26 +43,34 @@ double newtonRaphsonMethod()
 
     double x1;
 
-    for (int i = 1; i <= n; i++)
+    for (int i = 0; i < n; i++)
     {
+        double f_x = function(coeff, x0);
         double df_x = function(deriv, x0);
-        if (df_x == 0)
+
+        if (fabs(df_x) < 1e-10)
         {
-            cout << "Derivative is zero; Newton-Raphson method fails." << endl;
+            cout << "Derivative is too close to zero; Newton-Raphson method fails." << endl;
             return -1;
         }
 
-        x1 = x0 - function(coeff, x0) / df_x;
+        x1 = x0 - f_x / df_x;
+
+        if (fabs(x1 - x0) < 1e-10)
+        {
+            cout << "Root found at: " << x1 <<  endl;
+            return x1;
+        }
+
         x0 = x1;
     }
 
-    cout << "Root found at: " << x1 << " after " << n << " iterations." << endl;
+    cout << "Root found at: " << x1  << endl;
     return x1;
 }
 
 int main()
 {
     newtonRaphsonMethod();
-
     return 0;
 }
